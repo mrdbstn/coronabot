@@ -6,7 +6,7 @@ const fetchNumbers = async () => {
   var numbers = [];
   var differences = [];
   var text = [];
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({args: ['--no-sandbox']});
   const page = await browser.newPage();
 
   await page
