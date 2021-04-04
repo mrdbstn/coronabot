@@ -7,7 +7,7 @@ var channel = undefined;
 bot.login(TOKEN);
 
 const embedMessage = new Discord.MessageEmbed()
-  .setColor("##ffdf2e")
+  .setColor("#ffdf2e")
   .setTitle("Corona stats van vandaag")
 
 bot.on("ready", async () => {
