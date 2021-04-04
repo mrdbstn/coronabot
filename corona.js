@@ -1,63 +1,57 @@
 const puppeteer = require("puppeteer");
+const xpath = require("xpath");
+const dom = require("xmldom").DOMParser;
 const $ = require("cheerio");
 const url = "https://coronadashboard.rijksoverheid.nl";
 
 const fetchNumbers = async () => {
   var numbers = [];
-  var differences = [];
   var text = [];
-  const browser = await puppeteer.launch({args: ['--no-sandbox']});
+  const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
   const page = await browser.newPage();
 
-  await page
-    .goto(url)
-    .then(() => {
-      return page.content();
-    })
+  await page.goto(url);
 
-    .then((html) => {
-      //numbers
-      $(".iWnAOR", html).each((index, elem) => {
-        numbers.push($(elem).text());
-      });
+  await page.waitForXPath("/html/body/div/div/div/div/div[2]/div/div[3]/div[1]/div/div[2]/p")
 
-      //differences
-      $(".kVviWI", html).each((index, elem) => {
-        differences.push($(elem).text());
-      });
+  let positiveTestsHandle = await page.$x("/html/body/div/div/div/div/div[2]/div/div[3]/div[1]/div/div[2]/p")
+  let hospitalAdmissionsHandle = await page.$x("/html/body/div/div/div/div/div[2]/div/div[3]/div[2]/div/div[2]/p")
+  let vaccinesDoneHandle = await page.$x("/html/body/div/div/div/div/div[2]/div/div[3]/div[3]/div/p[1]")
+  
 
-      //full text
-      $(".cxatVo", html).each((index, elem) => {
-        if (index === 0) {
-          var description = processText($(elem).text(), 13)
-          text.push(description);
-        } else if (index === 1) {
-          var description = processText($(elem).text(), 11)
-          text.push(description);
-        }
-      });
-    });
-  return [numbers, differences, text];
+  let positiveTest = await page.evaluate(el => el.textContent, positiveTestsHandle[0])
+  let hospitalAdmissions = await page.evaluate(el => el.textContent, hospitalAdmissionsHandle[0])
+  let vaccinesDone = await page.evaluate(el => el.textContent, vaccinesDoneHandle[0])
+
+  positiveTest = processText(positiveTest, 13)
+  hospitalAdmissions = processText(hospitalAdmissions, 11)
+
+  text.push(positiveTest)
+  text.push(hospitalAdmissions)
+  numbers.push(vaccinesDone)
+
+  return [numbers, text];
 };
 
 const processText = (text, char) => {
-  let holder = text.split(" ")
-  let word = holder[char]
-  let counter = 0
+  let holder = text.split(" ");
+  let word = holder[char];
+  let counter = 0;
   for (let c of word) {
-    let el = Number(c)
-    if (isNaN(el)){ 
-      word = word.substring(0, counter) + " " + word.substring(counter, word.length)
+    let el = Number(c);
+    if (isNaN(el)) {
+      word =
+        word.substring(0, counter) + " " + word.substring(counter, word.length);
       break;
     } else {
       counter++;
     }
   }
 
-  holder[char] = word
+  holder[char] = word;
   result = holder.join(" ");
 
-  return result
-}
+  return result;
+};
 
 module.exports = fetchNumbers;

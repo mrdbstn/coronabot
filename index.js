@@ -18,11 +18,10 @@ bot.on("message", (msg) => {
 
     arrays.then((result) => {
       let numbers = result[0];
-      let differences = result[1];
-      let text = result[2];
+      let text = result[1];
       channel.send(text[0]); 
       channel.send(text[1]);
-      channel.send("Aantal gezette prikken: " + numbers[2]);
+      channel.send("Aantal gezette prikken: " + numbers[0]);
     });
   }
 });
