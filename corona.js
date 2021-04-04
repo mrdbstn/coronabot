@@ -1,7 +1,4 @@
 const puppeteer = require("puppeteer");
-const xpath = require("xpath");
-const dom = require("xmldom").DOMParser;
-const $ = require("cheerio");
 const url = "https://coronadashboard.rijksoverheid.nl";
 
 const fetchNumbers = async () => {
