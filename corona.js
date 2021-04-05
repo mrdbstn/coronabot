@@ -27,6 +27,8 @@ const fetchNumbers = async () => {
   text.push(hospitalAdmissions)
   numbers.push(vaccinesDone)
 
+  await browser.close()
+
   return [numbers, text];
 };
 
