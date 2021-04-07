@@ -35,13 +35,12 @@ bot.on("message", (msg) => {
 bot.on("message", (msg) => {
   channel = bot.channels.cache.get("827299110813958165");
 
-  if (
-    msg.author.username.startsWith("Robin") &&
-    msg.content.startsWith("!kanker")
-  ) {
-    kankerCounter++;
-    msg.channel.send(`Robin said kanker ${kankerCounter} times!`);
+  if (msg.content.startsWith("!kanker")) {
+    if (msg.author.username.startsWith("Robin")) {
+      kankerCounter++;
+      msg.channel.send(`Robin said kanker ${kankerCounter} times!`);
+    } else {
+      msg.reply(`Bek dicht, ${msg.author.username}`)
+    }
   }
-
-  
 });
