@@ -40,7 +40,7 @@ bot.on("message", (msg) => {
       kankerCounter++;
       msg.channel.send(`Robin said kanker ${kankerCounter} times!`);
     } else {
-      msg.reply(`Bek dicht, ${msg.author.username}`)
+      msg.reply(`Bek dicht`)
     }
   }
 });
