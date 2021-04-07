@@ -42,8 +42,6 @@ bot.on("message", (msg) => {
     kankerCounter++;
     msg.channel.send(`Robin said kanker ${kankerCounter} times!`);
   }
+
   
-  if (!msg.author.username.startsWith("Robin")) {
-    msg.reply(`Bek dicht ${msg.author.username}`);
-  }
 });
