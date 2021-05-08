@@ -9,11 +9,11 @@ const fetchNumbers = async () => {
 
   await page.goto(url);
 
-  await page.waitForXPath("/html/body/div/div/div/div/div[2]/div/div[3]/div[1]/div/div[2]/p")
+  await page.waitForXPath("/html/body/div/div/div/div/div/div/div[3]/div[1]/div/div[2]/p")
 
-  let positiveTestsHandle = await page.$x("/html/body/div/div/div/div/div[2]/div/div[3]/div[1]/div/div[2]/p")
-  let hospitalAdmissionsHandle = await page.$x("/html/body/div/div/div/div/div[2]/div/div[3]/div[2]/div/div[2]/p")
-  let vaccinesDoneHandle = await page.$x("/html/body/div/div/div/div/div[2]/div/div[3]/div[3]/div/p[1]")
+  let positiveTestsHandle = await page.$x("/html/body/div/div/div/div/div/div/div[3]/div[1]/div/div[2]/p")
+  let hospitalAdmissionsHandle = await page.$x("/html/body/div/div/div/div/div/div/div[3]/div[2]/div/div[2]/p")
+  let vaccinesDoneHandle = await page.$x("/html/body/div/div/div/div/div/div/div[3]/div[3]/div/p[2]")
   
 
   let positiveTest = await page.evaluate(el => el.textContent, positiveTestsHandle[0])
